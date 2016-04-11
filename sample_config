@@ -1,0 +1,2 @@
+SERVER_ADDR = "http://buildbot.buildbot.com"
+BRANCH_NAME = "master"
