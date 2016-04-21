@@ -2,7 +2,7 @@
 
 import signal
 import webbrowser
-from gc import get_objects
+from stat_checker import StatChecker
 
 from gi.repository import Gtk as gtk
 from gi.repository import AppIndicator3 as appindicator
@@ -17,6 +17,7 @@ CHECK_INTERVAL_S = 60
 
 
 APPINDICATOR_ID = 'buildbot-indicator'
+
 
 def main():
     indicator = appindicator.Indicator.new(APPINDICATOR_ID,
@@ -53,6 +54,7 @@ def terminate(_):
 
 if __name__ == "__main__":
     notify.init(APPINDICATOR_ID)
+    checker = StatChecker(SERVER_ADDRESS, BUILDERS, BRANCH)
     gobject.timeout_add(1000*CHECK_INTERVAL_S, notify.Notification.new("notif", "notif").show)
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     main()
