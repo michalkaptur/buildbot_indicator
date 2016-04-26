@@ -8,7 +8,7 @@ class State:
         return self.state
 
     def update_state(self):
-        self.state_checker.update_builders_status
+        self.state_checker.update_builders_status()
         self.previous_state = self.state
         self.state = self.state_checker.all_builds_succedded()
 
