@@ -3,6 +3,7 @@
 import signal
 import webbrowser
 from stat_checker import StatChecker
+from state import State
 
 from gi.repository import Gtk as gtk
 from gi.repository import AppIndicator3 as appindicator
@@ -55,6 +56,7 @@ def terminate(_):
 if __name__ == "__main__":
     notify.init(APPINDICATOR_ID)
     checker = StatChecker(SERVER_ADDRESS, BUILDERS, BRANCH)
+    state = State(checker)
     gobject.timeout_add(1000*CHECK_INTERVAL_S, notify.Notification.new("notif", "notif").show)
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     main()
