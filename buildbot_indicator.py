@@ -53,10 +53,21 @@ def terminate(_):
     notify.uninit()
     gtk.main_quit()
 
+
+def timeout_callback(state_obj):
+    state_obj.update_state()
+    if state_obj.state_changed():
+        state_str = ""
+        if state_obj.get_current_state() == False:
+            notify.Notification.new(BRANCH+" failed", "regression for "+BRANCH+" failed due to (insert_failed)").show()
+        elif state_obj.get_current_state() == True:
+            notify.Notification.new(BRANCH+" is OK", "regression for "+BRANCH+" succeeded for all builders :)").show()
+
+
 if __name__ == "__main__":
     notify.init(APPINDICATOR_ID)
     checker = StatChecker(SERVER_ADDRESS, BUILDERS, BRANCH)
     state = State(checker)
-    gobject.timeout_add(1000*CHECK_INTERVAL_S, notify.Notification.new("notif", "notif").show)
+    gobject.timeout_add(1000*CHECK_INTERVAL_S, timeout_callback)
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     main()

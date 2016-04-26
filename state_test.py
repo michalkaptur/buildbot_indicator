@@ -2,7 +2,6 @@ from mock import Mock
 import unittest
 
 from state import State
-from stat_checker import StatChecker
 
 class BaseStateTestCase(unittest.TestCase):
     def setUp(self):
